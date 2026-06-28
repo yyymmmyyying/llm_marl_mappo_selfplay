@@ -1,0 +1,29 @@
+# configs/simulator.yaml
+# 多智能体仿真环境全局参数
+task_dataset:
+  dataset_path: "./data/task_pool.jsonl"
+  max_task_count: 1000
+  shuffle_dataset: true
+
+agent_loop:
+  max_step_per_task: 10
+  max_retry_code: 3
+  enable_backtrack: true
+
+parallel:
+  num_parallel_env: 4
+  batch_infer: true
+
+sandbox:
+  api_url: "http://127.0.0.1:8001/execute"
+  timeout: 10
+
+log:
+  save_trajectory: true
+  trajectory_save_dir: "./data/trajectories"
+  log_step_detail: true
+
+self_play:
+  enable: false
+  opponent_weight_dir: "./output/self_play_ckpt"
+  sample_opponent_num: 2
