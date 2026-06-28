@@ -1,0 +1,36 @@
+# configs/train_single.yaml
+# 单卡PPO/MAPPO训练基础超参
+model:
+  base_model: "lmsys/vicuna-7b-v1.5"
+  load_checkpoint: null
+  lora_rank: 8
+  lora_alpha: 16
+  freeze_backbone: false
+
+training:
+  total_epochs: 10
+  batch_size: 4
+  micro_batch_size: 1
+  lr: 2e-5
+  weight_decay: 0.01
+  warmup_steps: 100
+  clip_grad_norm: 1.0
+
+ppo:
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_epsilon: 0.2
+  value_coeff: 0.5
+  entropy_coeff: 0.01
+  update_epochs: 4
+  max_seq_len: 2048
+
+data:
+  trajectory_buffer_size: 1000
+  self_play_enable: false
+  shuffle_buffer: true
+
+log:
+  log_interval: 10
+  save_interval: 50
+  output_dir: "./output/single_train"
