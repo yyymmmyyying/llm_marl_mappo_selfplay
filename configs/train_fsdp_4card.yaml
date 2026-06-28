@@ -1,0 +1,46 @@
+# configs/train_fsdp_4card.yaml
+# 单机4卡FSDP分布式MAPPO训练配置
+model:
+  base_model: "lmsys/vicuna-7b-v1.5"
+  load_checkpoint: null
+  lora_rank: 8
+  lora_alpha: 16
+  freeze_backbone: false
+  fsdp_shard_strategy: "FULL_SHARD"
+  offload_optim: false
+
+training:
+  total_epochs: 10
+  batch_size: 16
+  micro_batch_size: 1
+  lr: 2e-5
+  weight_decay: 0.01
+  warmup_steps: 200
+  clip_grad_norm: 1.0
+  num_workers: 4
+
+ppo:
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_epsilon: 0.2
+  value_coeff: 0.5
+  entropy_coeff: 0.01
+  update_epochs: 4
+  max_seq_len: 2048
+
+data:
+  trajectory_buffer_size: 5000
+  self_play_enable: true
+  shuffle_buffer: true
+  num_parallel_sim: 8
+
+distributed:
+  world_size: 4
+  master_port: 29500
+  gradient_as_bucket_view: true
+  activation_checkpointing: true
+
+log:
+  log_interval: 20
+  save_interval: 100
+  output_dir: "./output/fsdp_4card_train"
