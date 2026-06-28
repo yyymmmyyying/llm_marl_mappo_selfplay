@@ -1,0 +1,33 @@
+# configs/inference_vllm.yaml
+# vLLM异步推理服务统一配置
+model:
+  base_model: "lmsys/vicuna-7b-v1.5"
+  tensor_parallel_size: 1
+  gpu_memory_utilization: 0.85
+  max_model_len: 2048
+  dtype: "auto"
+
+generation:
+  temperature: 0.7
+  top_p: 0.9
+  top_k: 40
+  max_new_tokens: 512
+  repetition_penalty: 1.05
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  batch_limit: 16
+  max_queue_size: 256
+
+prompt:
+  planner_template: |
+    你是任务规划智能体，根据用户原始需求拆解分步执行流程，仅输出结构化步骤列表。
+    用户需求：{query}
+  code_template: |
+    根据执行需求生成可运行Python代码，包含异常捕获与结果输出语句。
+    执行需求：{step_desc}
+  judge_template: |
+    对比原始任务目标与代码运行输出，判断任务是否完成，识别计算、逻辑、数据错误。
+    任务目标：{origin_task}
+    运行输出：{code_output}
