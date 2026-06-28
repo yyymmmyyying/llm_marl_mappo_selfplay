@@ -1,0 +1,22 @@
+# configs/self_play.yaml
+# 自博弈训练权重管理、对手采样配置
+checkpoint:
+  save_freq: 50
+  max_ckpt_num: 10
+  ckpt_root: "./output/self_play_ckpt"
+  keep_latest: true
+
+opponent_sample:
+  sample_count: 2
+  sample_strategy: "uniform"
+  min_train_step: 200
+  skip_initial_ckpt: true
+
+simulation:
+  enable_self_play_env: true
+  env_num_per_opponent: 2
+  mix_current_policy: true
+
+filter:
+  min_task_success_rate: 0.3
+  discard_low_perf_ckpt: true
