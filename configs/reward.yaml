@@ -1,0 +1,20 @@
+# configs/reward.yaml
+# 三层分层奖励函数权重设置
+step_reward:
+  plan_valid: 0.2
+  code_runnable: 0.3
+  single_step_correct: 0.5
+
+terminal_reward:
+  task_complete: 5.0
+  partial_complete: 1.5
+  all_failed: -3.0
+
+penalty:
+  code_retry_penalty: -0.4
+  backtrack_penalty: -0.6
+  invalid_plan_penalty: -0.3
+
+normalize:
+  enable: true
+  norm_range: [-10, 10]
